@@ -23,6 +23,7 @@ input{
   height: 40px;
   font-size: 16px;
   padding-left: 40px;
+  font: Arial, Helvetica, sans-serif;
 }
 
 input:focus{
@@ -58,4 +59,41 @@ input:focus{
 
 .green {
   color: #a0dc47;
+}
+
+#info{
+  width: 420px;
+  height: 28px;
+  background: #E7E7E7;
+  box-shadow: inset 0px 1px 3px #666;
+  font-size: 11px;
+  padding-top: 5px;
+  padding-left: 10px;  
+}
+
+#links{
+  margin-left: 32%;
+  padding-left: 6px;
+  margin-top: 3px;
+  position: absolute;
+}
+
+#clear{
+  margin-left: 75%;
+  position: absolute;
+  width: 80px;
+  height: 18;
+  border-radius: 5px; 
+  border: none;
+  color: #999;
+  background: #CDCDCD;
+}
+
+#item-count{
+  margin-top: 3px;
+  position: absolute;
+}
+
+#clear:focus{
+  outline: none;
 }
