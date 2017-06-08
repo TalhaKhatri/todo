@@ -1,87 +1,61 @@
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
 
-/* Space out content a bit */
+
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  background: url(../images/back.png) repeat;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-right: 15px;
-  padding-left: 15px;
+#notepad{
+  width: 420px;
+  border-top: 10px solid #82706B;
+  box-shadow: 1px 1px 5px #666;
 }
 
-/* Custom page header */
-.header {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e5e5e5;
+#title{
+  color: #C4C4C4;
+  font-size: 60px;
+  
 }
 
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
+input{
+  width: 420px;
+  height: 40px;
+  font-size: 16px;
+  padding-left: 40px;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+input:focus{
+  outline: none;
 }
 
-/* Customize container */
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
+.check {
+  position: absolute;
+  z-index: 2;
+  padding-left: 9px;
+  padding-top: 6px;
+  font-weight: 900;
+  color: #999;
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+.check:hover {
+  cursor: default;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+.cross:hover {
+  cursor: default;
+}
+.cross {
+  position: absolute;
+  z-index: 2;
+  margin-left: 390px;
+  margin-top: 10px;
+  display: none;
+  font-size: 18px;
+  font-weight: 900;
+  color: #991212;
+}
+
+.green {
+  color: #a0dc47;
 }

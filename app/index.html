@@ -5,27 +5,22 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>frontapp</title>
-
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-    
-  </head>
-  <body>
- 
-
-    
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="scripts/bundle.js"></script>
-
+  </head>
+  <body> 
+    <div class="row">
+      <div id="app" class="col-md-4 col-md-offset-4">
+        <h1 id="title" class="text-center">todo</h1>
+        <br><br>
+        <div id="notepad">
+          <div>
+            <input id="main" class="input" type="text" placeholder="What needs to be done?">
+          </div>
+          <div id="list"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
