@@ -13,6 +13,7 @@ $(document).ready(function(){
     var incomplete = 0;
     var complete = 0;
     var state = 0;
+    var toggleAll = 0;
 
     if (typeof(Storage) !== "undefined") {
         if(localStorage.list){
@@ -45,8 +46,8 @@ $(document).ready(function(){
         if(e.which == 13) {
             if($(this).val() != ""){
                 $('#list').prepend('<div class="item"><i class="material-icons check" id="check">check</i><i class="material-icons cross">close</i><input class="input" type="text" value="' + $(this).val() + '"></div>');
-               if(state = 2) {
-                   $('#list').get(0).toggle(false);
+               if(state == 2) {
+                   $('#list').children().eq(0).toggle(false);
                }
                if(incomplete == 0){
                 var toggle = true;
@@ -154,7 +155,9 @@ $(document).ready(function(){
     });
 
     $('#all').click(function(){
-
+        $('#all').toggleClass('selected', true);
+        $('#active').toggleClass('selected', false);
+        $('#completed').toggleClass('selected', false);
         state = 0;
         list.forEach(function(item, index) {
             $('#list').children().eq(index).toggle(true);
@@ -163,6 +166,9 @@ $(document).ready(function(){
     });
 
     $('#active').click(function(){
+        $('#all').toggleClass('selected', false);
+        $('#active').toggleClass('selected', true);
+        $('#completed').toggleClass('selected', false);
         state = 1;
         list.forEach(function(item, index) {
             if(item.status == 0){
@@ -175,6 +181,9 @@ $(document).ready(function(){
     });
 
     $('#completed').click(function(){
+        $('#all').toggleClass('selected', false);
+        $('#active').toggleClass('selected', false);
+        $('#completed').toggleClass('selected', true);
         state = 2;
         list.forEach(function(item, index) {
             if(item.status == 1){
@@ -185,6 +194,56 @@ $(document).ready(function(){
         }, this);
         console.log('done!');
     });
+
+    $('#done-all').click(function(){
+        $(this).toggleClass('green');
+        toggleAll = toggleAll === 0 ? 1 : 0;
+        if(toggleAll == 1) {
+            list.forEach(function(item, index) {
+                if(item.status == 0){
+                    $('#list').children().eq(index).find('i').toggleClass('green');
+                    $('#list').children().eq(index).find('input').css('text-decoration', 'line-through');
+                }
+                item.status = 1;
+            }, this);
+            complete = list.length;
+            incomplete = 0;
+            $('#clear').html('Clear completed (' + complete + ')' );
+            $('#item-count').toggle(false);
+            $('#clear').toggle(true);
+        } else {
+            list.forEach(function(item, index) {
+                if(item.status == 1){
+                    $('#list').children().eq(index).find('i').toggleClass('green');
+                    $('#list').children().eq(index).find('input').css('text-decoration', 'none');
+                } 
+                item.status = 0;
+            }, this);
+            complete = 0;
+            $('#clear').toggle(false);
+            $('#item-count').toggle(true);
+            $('#clear').html('Clear completed (' + complete + ')' );
+        }
+
+        if(state == 1){
+            list.forEach(function(item, index) {
+                if(item.status == 0){
+                    $('#list').children().eq(index).toggle(true);
+                } else {
+                    $('#list').children().eq(index).toggle(false);
+                }
+            }, this);
+        } else if(state == 2) {
+            list.forEach(function(item, index) {
+                if(item.status == 1){
+                    $('#list').children().eq(index).toggle(true);
+                } else {
+                    $('#list').children().eq(index).toggle(false);
+                }
+            }, this);
+        }
+        
+    })
 
     $(document).on('mouseover', '.item', function() {
         $(this).find('.cross').toggle();

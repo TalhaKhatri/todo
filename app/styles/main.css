@@ -108,3 +108,11 @@ input:focus{
   text-decoration: none;
   cursor: pointer;
 }
+
+#done-all{
+  position: absolute;
+  z-index: 2;
+  margin-left: 2%;
+  margin-top: 2%; 
+  color: #999;
+}
