@@ -73,8 +73,9 @@ input:focus{
 
 #links{
   margin-left: 32%;
-  padding-left: 6px;
+  padding-left: 10px;
   margin-top: 3px;
+  color: #796B66;
   position: absolute;
 }
 
@@ -99,7 +100,11 @@ input:focus{
   outline: none;
 }
 
-a:hover{
+.selected{
+  font-weight: 900;
+}
+
+#links:hover{
   text-decoration: none;
   cursor: pointer;
 }

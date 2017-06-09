@@ -12,6 +12,8 @@ Storage.prototype.getObj = function(key) {
 $(document).ready(function(){
     var incomplete = 0;
     var complete = 0;
+    var state = 0;
+
     if (typeof(Storage) !== "undefined") {
         if(localStorage.list){
             var list = localStorage.getObj("list");
@@ -42,7 +44,10 @@ $(document).ready(function(){
     $('#main').keypress(function(e) {
         if(e.which == 13) {
             if($(this).val() != ""){
-               $('#list').prepend('<div class="item"><i class="material-icons check" id="check">check</i><i class="material-icons cross">close</i><input class="input" type="text" value="' + $(this).val() + '"></div>');
+                $('#list').prepend('<div class="item"><i class="material-icons check" id="check">check</i><i class="material-icons cross">close</i><input class="input" type="text" value="' + $(this).val() + '"></div>');
+               if(state = 2) {
+                   $('#list').get(0).toggle(false);
+               }
                if(incomplete == 0){
                 var toggle = true;
                } else {
@@ -69,10 +74,16 @@ $(document).ready(function(){
         var prevComplete = complete;
         if(list[index].status == 1){
             $(this).parent().find('input').css('text-decoration', 'line-through');
+            if(state == 1){
+                $(this).parent().toggle();
+            }
             incomplete--;
             complete++;
         } else {
             $(this).parent().find('input').css('text-decoration', 'none');
+            if(state == 2){
+                $(this).parent().toggle();
+            }
             incomplete++;
             complete--;
         }
@@ -126,17 +137,53 @@ $(document).ready(function(){
         list.forEach(function(item, index) {
             if(item.status == 0){
                 nonRemovables.push(item);
-                nonRemovableElements.push($('.item').get(index));
             } 
         }, this);
         $('#list').empty();
-        nonRemovableElements.forEach(function(element) {
-            $('#list').append(element);
-        }, this);
         list = nonRemovables;
+        list.forEach(function(element) {
+            if(element.status == 0){
+                $('#list').append('<div class="item"><i class="material-icons check" id="check">check</i><i class="material-icons cross">close</i><input class="input" type="text" value="' + element.task + '"></div>');
+            } else {
+                $('#list').append('<div class="item"><i class="material-icons check green" id="check">check</i><i class="material-icons cross">close</i><input class="input" style="text-decoration: line-through;" type="text" value="' + element.task + '"></div>');
+            }   
+        }, this);
         localStorage.setObj("list", list);
         complete = 0;
         $('#clear').toggle();
+    });
+
+    $('#all').click(function(){
+
+        state = 0;
+        list.forEach(function(item, index) {
+            $('#list').children().eq(index).toggle(true);
+        }, this);
+        console.log('done!');
+    });
+
+    $('#active').click(function(){
+        state = 1;
+        list.forEach(function(item, index) {
+            if(item.status == 0){
+                $('#list').children().eq(index).toggle(true);
+            } else {
+                $('#list').children().eq(index).toggle(false);
+            }
+        }, this);
+        console.log('done!');
+    });
+
+    $('#completed').click(function(){
+        state = 2;
+        list.forEach(function(item, index) {
+            if(item.status == 1){
+                $('#list').children().eq(index).toggle(true);
+            } else {
+                $('#list').children().eq(index).toggle(false);
+            }
+        }, this);
+        console.log('done!');
     });
 
     $(document).on('mouseover', '.item', function() {
