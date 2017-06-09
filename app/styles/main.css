@@ -79,11 +79,12 @@ input:focus{
 }
 
 #clear{
-  margin-left: 75%;
+  margin-left: 70%;
   position: absolute;
-  width: 80px;
+  width: 100px;
   height: 18;
   border-radius: 5px; 
+  font-size: 9px;
   border: none;
   color: #999;
   background: #CDCDCD;
@@ -96,4 +97,9 @@ input:focus{
 
 #clear:focus{
   outline: none;
+}
+
+a:hover{
+  text-decoration: none;
+  cursor: pointer;
 }
