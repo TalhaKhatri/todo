@@ -72,15 +72,16 @@ input:focus{
 }
 
 #links{
-  margin-left: 32%;
+  margin-left: 135px;
   padding-left: 10px;
+  width: 150px;
   margin-top: 3px;
   color: #796B66;
   position: absolute;
 }
 
 #clear{
-  margin-left: 70%;
+  margin-left: 305px;
   position: absolute;
   width: 100px;
   height: 18;
@@ -112,7 +113,7 @@ input:focus{
 #done-all{
   position: absolute;
   z-index: 2;
-  margin-left: 2%;
-  margin-top: 2%; 
+  margin-left: 10px;
+  margin-top: 10px; 
   color: #999;
 }
