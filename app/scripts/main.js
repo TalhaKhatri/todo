@@ -1,5 +1,4 @@
 import css from '../styles/main.css';
-console.log('\'Allo \'Allo!');
 var $ = require('../../bower_components/jquery/dist/jquery.js');
 
 Storage.prototype.setObj = function(key, obj) {
@@ -150,6 +149,15 @@ $(document).ready(function(){
             }   
         }, this);
         localStorage.setObj("list", list);
+        if(state == 2){
+            list.forEach(function(item, index) {
+            if(item.status == 1){
+                $('#list').children().eq(index).toggle(true);
+            } else {
+                $('#list').children().eq(index).toggle(false);
+            }
+            }, this);
+        }
         complete = 0;
         $('#clear').toggle();
     });
@@ -162,7 +170,7 @@ $(document).ready(function(){
         list.forEach(function(item, index) {
             $('#list').children().eq(index).toggle(true);
         }, this);
-        console.log('done!');
+
     });
     //Show only the incomplete todos
     $('#active').click(function(){
@@ -177,7 +185,7 @@ $(document).ready(function(){
                 $('#list').children().eq(index).toggle(false);
             }
         }, this);
-        console.log('done!');
+
     });
     //Show only the completed todos
     $('#completed').click(function(){
@@ -192,7 +200,7 @@ $(document).ready(function(){
                 $('#list').children().eq(index).toggle(false);
             }
         }, this);
-        console.log('done!');
+
     });
     //Toggle all todos between complete and incomplete
     $('#done-all').click(function(){
