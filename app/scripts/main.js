@@ -244,6 +244,12 @@ $(document).ready(function(){
         }
         
     })
+
+    $(document).on('change', '.item', function(){
+        var index = $('.item').index($(this));
+        list[index].task = $(this).find('input').val();
+        localStorage.setObj("list", list);
+    })
     //Show the cross for deleting a todo on hover
     $(document).on('mouseover', '.item', function() {
         $(this).find('.cross').toggle();
