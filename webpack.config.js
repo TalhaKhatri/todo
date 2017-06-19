@@ -6,7 +6,8 @@ module.exports = {
   module: {
       loaders: [
         { test: /\.css$/, loader: "style-loader!css-loader" },
-        { test: /\.png$/, loader: "url-loader?mimetype=image/png" }
+        { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
+        { test: /\.html$/, loader: "raw-loader" }
       ],
     },
   watch: true

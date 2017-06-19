@@ -1,6 +1,7 @@
 import css from '../styles/main.css';
 var $ = require('../../bower_components/jquery/dist/jquery.js');
 
+
 Storage.prototype.setObj = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
 }
