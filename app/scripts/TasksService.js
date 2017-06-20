@@ -12,9 +12,9 @@ Storage.prototype.getObj = function(key) {
  * @constructor
  * 
  */
-var tasksService = function() {
+var TasksService = function() {
     if (typeof(Storage) !== "undefined") {
-        if(localStorage.taskList){
+        if(localStorage.tasks){
             this.tasks = localStorage.getObj("tasks");
         } else {
             this.tasks = [];
@@ -24,7 +24,7 @@ var tasksService = function() {
     }
 };
 
-tasksService.prototype = _.extend(tasksService, {
+TasksService.prototype = _.extend(TasksService, {
 
     //Get all tasks.
     getAllTasks: function() {
@@ -53,6 +53,12 @@ tasksService.prototype = _.extend(tasksService, {
         });
     },
 
+    //Sets a new value for description of task at index.
+    setTask: function(index, line) {
+        this.tasks[index].description = line;
+        this.save();
+    },
+
      /**
      * Add a task.
      * @param line - Description of the task.
@@ -60,7 +66,7 @@ tasksService.prototype = _.extend(tasksService, {
     addTask: function(line) {
         var task = { description: line, completed: false };
         this.tasks.unshift(task);
-        localStorage.setObj("tasks", this.tasks);
+        this.save();
         return true;
     },
 
@@ -71,15 +77,49 @@ tasksService.prototype = _.extend(tasksService, {
      */
     removeTask: function(index) {
         var task = this.tasks.splice(index, 1);
-        localStorage.setObj("tasks", this.tasks);
+        this.save();
         return task;
     },
 
     //Removes all completed tasks.
     removeAllCompletedTasks: function() {
         this.tasks = this.getAllIncompleteTasks();
-        localStorage.setObj("tasks", this.tasks);
+        this.save();
         return this.tasks;
-    }
+    },
 
+    removeAllTasks: function() {
+        this.tasks = [];
+        this.save();
+    },
+
+    /**
+     * Toggles a task between complete and incomplete.
+     * @param index - Index value of the task.
+     */
+     toggleTask: function(index) {
+         this.tasks[index].completed = this.tasks[index].completed ? false : true;
+         this.save();
+     },
+
+    //Toggles all tasks between complete and incomplete.
+    toggleAllTasks: function() {
+        var incompleteTasks = this.getAllIncompleteTasks();
+        if(incompleteTasks.length > 0){
+            this.tasks.forEach(function(task) {
+                task.completed = true;
+            }, this);
+        } else {
+            this.tasks.forEach(function(task) {
+                task.completed = false;
+            }, this);
+        }
+        this.save();
+    },
+
+    save: function() {
+        localStorage.setObj("tasks", this.tasks);
+    }
 });
+
+module.exports = TasksService;

@@ -28,5 +28,22 @@
         </div>
       </div>
     </div>
+    <script id="task-template" type="x-handlebars-template">​
+      {{#each this}}​
+      {{#if completed}}
+      <div class="item">
+        <i class="material-icons check green" id="check">check</i>
+        <i class="material-icons cross">close</i>
+        <input class="input completed"  type="text" value="{{description}}">
+      </div>
+      {{else}}
+      <div class="item">
+        <i class="material-icons check" id="check">check</i>
+        <i class="material-icons cross">close</i>
+        <input class="input" type="text" value="{{description}}">
+      </div>
+      {{/if}}
+      {{/each}}
+​   </script>
   </body>
 </html>
