@@ -3,6 +3,12 @@ var Handlebars = require('../../node_modules/handlebars/dist/handlebars.min.js')
 var View = function() { };
 
 View.prototype = {
+    /**
+     * Render the notepad on to the screen.
+     * @param tasks - List of tasks to be rendered.
+     * @param incompleteTaskCount - Number of incomplete tasks.
+     * @param completeTaskCount - Number of completes tasks.
+     */
     render: function(tasks, incompleteTaskCount, completeTaskCount) {
         $('#list').empty();
         $('#item-count').empty();

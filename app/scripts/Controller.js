@@ -8,6 +8,7 @@ var Controller = function(tasksService, view) {
 
 Controller.prototype = {
 
+    //Refresh the view
     refresh: function() {
         switch(this.state) {
             case 0:
@@ -28,6 +29,10 @@ Controller.prototype = {
         }
     },
 
+    /**
+     * Calculate the actual index of a task in each state.
+     * @param index - The index value of the task in the DOM.
+     */
     getActualIndex: function(index) {
         switch(this.state) {
             case 0:
@@ -63,7 +68,8 @@ Controller.prototype = {
         }
         this.refresh();
     },
-
+    
+    //Start the controller
     start: function() {
         this.refresh();
         var controller = this;
