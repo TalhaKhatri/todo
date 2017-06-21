@@ -53,6 +53,21 @@ TasksService.prototype = _.extend(TasksService, {
         });
     },
 
+    //Returns the total number of tasks.
+    getTaskCount: function(){
+        return this.task.length;
+    },
+
+    //Returns the number of completed tasks.
+    getCompletedTaskCount: function() {
+        return this.getAllCompleteTasks().length;
+    },
+
+    //Returns the number of incomplete tasks.
+    getIncompleteTaskCount: function() {
+        return this.getAllIncompleteTasks().length;
+    },
+
     //Sets a new value for description of task at index.
     setTask: function(index, line) {
         this.tasks[index].description = line;
@@ -88,6 +103,7 @@ TasksService.prototype = _.extend(TasksService, {
         return this.tasks;
     },
 
+    //Removes all tasks.
     removeAllTasks: function() {
         this.tasks = [];
         this.save();
@@ -117,6 +133,7 @@ TasksService.prototype = _.extend(TasksService, {
         this.save();
     },
 
+    //Saves the tasks to local storage.
     save: function() {
         localStorage.setObj("tasks", this.tasks);
     }
