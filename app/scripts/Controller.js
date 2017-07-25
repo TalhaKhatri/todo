@@ -12,8 +12,14 @@ Controller.prototype = {
     refresh: function() {
         switch(this.state) {
             case 0:
-                this.view.render(this.tasksService.getAllTasks(), 
+                /* this.tasksService.getAllTasks()
+                    .then((tasks) => {
+                        this.view.render(tasks,
                             this.tasksService.getIncompleteTaskCount(), 
+                            this.tasksService.getCompletedTaskCount());
+                    }); */
+                this.view.render(this.tasksService.getAllTasks(),
+                            this.tasksService.getIncompleteTaskCount(),
                             this.tasksService.getCompletedTaskCount());
                 break;
             case 1:
@@ -77,9 +83,10 @@ Controller.prototype = {
         $('#main').keypress(function(e) {
             if(e.which == 13) {
                 if($(this).val() !== ""){
-                    controller.tasksService.addTask($(this).val());
-                    controller.refresh();
-                    $(this).val(""); 
+                    controller.tasksService.addTask($(this).val()).then(() => {
+                        controller.refresh();
+                        $(this).val(""); 
+                    });
                 }
             }
         });
@@ -93,8 +100,9 @@ Controller.prototype = {
         //Delete a  todo
         $(document).on('click', '.cross', function() {
             var index = $('.item').index($(this).parent());
-            controller.tasksService.removeTask(index);
-            controller.refresh();
+            controller.tasksService.removeTask(index).then(() => {
+                controller.refresh();
+            }); 
         });
         //Delete all completed todos
         $('#clear').click(function(){
