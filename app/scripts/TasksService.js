@@ -121,21 +121,21 @@ TasksService.prototype = _.extend(TasksService, {
 
     //Removes all completed tasks.
     removeAllCompletedTasks: function () {
-        this.tasks = this.getAllIncompleteTasks();
         this.getAllCompleteTasks().forEach(function(task) {
             this.database.ref('tasks/'+task.id).remove()
-            .then(() => {
-                this.tasks.splice(index, 1);
-                return task;
-            })
             .catch((err) => {   console.log(err); });
         }, this);
+        this.tasks = this.getAllIncompleteTasks();
         this.save();
         return this.tasks;
     },
 
     //Removes all tasks.
     removeAllTasks: function () {
+        this.tasks.forEach(function(task) {
+            this.database.ref('tasks/'+task.id).remove()
+            .catch((err) => {   console.log(err); });
+        }, this);
         this.tasks = [];
         this.save();
     },
@@ -162,10 +162,14 @@ TasksService.prototype = _.extend(TasksService, {
         var incompleteTasks = this.getAllIncompleteTasks();
         if (incompleteTasks.length > 0) {
             this.tasks.forEach(function (task) {
+                this.database.ref('tasks/' + task.id)
+                .update({ completed: true });
                 task.completed = true;
             }, this);
         } else {
             this.tasks.forEach(function (task) {
+                this.database.ref('tasks/' + task.id)
+                .update({ completed: false });
                 task.completed = false;
             }, this);
         }
