@@ -77,10 +77,11 @@ Controller.prototype = {
         $('#main-box').keypress(function(e) {
             if(e.which == 13) {
                 if($('#main').val() !== "" && $('#duedate').val() !== ""){
-                    controller.tasksService.addTask($('#main').val(), $('#duedate').val()).then(() => {
+                    controller.tasksService.addTask($('#main').val(), $('#duedate').val(), $('#tags').val()).then(() => {
                         controller.refresh();
                         $('#main').val("");
                         $('#duedate').val("");
+                        $('#tags').val("");
                     });
                 }
             }

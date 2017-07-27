@@ -7,8 +7,8 @@ body {
 }
 
 #notepad {
-  margin-left: 33%;
-  width: 420px;
+  margin: 0 auto;
+  width: 800px;
   border-top: 10px solid #82706B;
   box-shadow: 1px 1px 5px #666;
 }
@@ -23,13 +23,21 @@ body {
   flex-direction: row;
 }
 
+#main {
+  width: 40%;
+}
+
+#tags {
+  width: 30%;
+}
+
 #box {
   display: flex;
   flex-direction: row;
 }
 
 input {
-  width: 420px;
+  width: 70%;
   height: 40px;
   font-size: 16px;
   padding-left: 40px;
@@ -37,13 +45,13 @@ input {
 }
 
 #duedate {
-  width: 60%;
+  width: 30%;
   padding: 0;
   padding-left: 2px; 
 }
 
 #date {
-  width: 60%;
+  width: 30%;
   padding: 0;
   padding-left: 2px;   
 }
@@ -70,8 +78,8 @@ input:focus {
 }
 .cross {
   position: absolute;
-  z-index: 2;
-  margin-left: 245px;
+  z-index: 3;
+  margin-left: 50%;
   margin-top: 10px;
   display: none;
   font-size: 18px;
@@ -83,8 +91,21 @@ input:focus {
   color: #a0dc47;
 }
 
+.label {
+  margin-right: 2px; 
+}
+
+#labels {
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse; 
+  margin-top: 10px;
+  margin-left: 30%;
+  z-index: 2
+}
+
 #info{
-  width: 420px;
+  width: 100%;
   height: 28px;
   background: #E7E7E7;
   box-shadow: inset 0px 1px 3px #666;
@@ -94,7 +115,7 @@ input:focus {
 }
 
 #links{
-  margin-left: 135px;
+  margin-left: 30%;
   padding-left: 10px;
   width: 150px;
   margin-top: 3px;
@@ -103,7 +124,7 @@ input:focus {
 }
 
 #clear{
-  margin-left: 305px;
+  margin-left: 60%;
   position: absolute;
   width: 100px;
   height: 18;

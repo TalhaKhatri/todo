@@ -19,13 +19,18 @@
             <i class="material-icons" id="done-all">done_all</i>
             <div id="main-box">
               <input id="main" class="input" type="text" placeholder="What needs to be done?">
+              <input id="tags" class="input" type="text" placeholder="Tags (comma seperated)">
               <input id="duedate" class="input" type="date">
             </div>
           </div>
           <div id="list"></div>
           <div id="info">
             <span id="item-count"></span>
-            <span id="links"><span id="all" class="selected">All </span><span id="active">Active </span><span id="completed">Completed </span></span>
+            <span id="links">
+              <span id="all" class="selected">All </span>
+              <span id="active">Active </span>
+              <span id="completed">Completed </span>
+            </span>
             <button id="clear">Clear</button>
           </div>
         </div>
@@ -37,9 +42,11 @@
       <div class="item">
         <i class="material-icons check green" id="check">check</i>
         <i class="material-icons cross">close</i>
-        {{#each labels}}
-          <span class="label label-info">{{this}}</span>
-        {{/each}}
+        <div id="labels">
+          {{#each tags}}
+            <span class="label label-info">{{this}}</span>
+          {{/each}}
+        </div>
         <div id="box">
           <input id="description" class="input completed"  type="text" value="{{description}}">
           <input id="date" class="input completed" type="date" value="{{dueDate}}">
@@ -49,6 +56,11 @@
       <div class="item">
         <i class="material-icons check" id="check">check</i>
         <i class="material-icons cross">close</i>
+        <div id="labels">
+          {{#each tags}}
+            <span class="label label-info">{{this}}</span>
+          {{/each}}
+        </div>
         <div id="box">
           <input id="description" class="input" type="text" value="{{description}}">
           <input id="date" class="input" type="date" value="{{dueDate}}">

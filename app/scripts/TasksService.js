@@ -101,8 +101,12 @@ TasksService.prototype = _.extend(TasksService, {
     * Add a task.
     * @param line - Description of the task.
     */
-    addTask: function (line, dueDate) {
-        var task = { description: line, dueDate: dueDate, completed: false };
+    addTask: function (line, dueDate, tagString) {
+        var tags = [];
+        tagString.split(',').forEach(function(tag) {
+            tags.push(tag);
+        }, this);
+        var task = { description: line, dueDate: dueDate, tags: tags, completed: false };
         this.database.ref('tasks').push(task);
         return this.update();
     },
