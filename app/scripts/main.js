@@ -30,9 +30,10 @@ $(document).ready(function(){
             });
             var view = new View();
             var tasksService = new TasksService(database);
+            var controller = new Controller(tasksService, view);
+            controller.start();
             tasksService.update().then(() => {
-                var controller = new Controller(tasksService, view);
-                controller.start();
+                controller.refresh();
             });
         })
         .catch(function(error) {

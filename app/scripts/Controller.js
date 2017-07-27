@@ -12,12 +12,6 @@ Controller.prototype = {
     refresh: function() {
         switch(this.state) {
             case 0:
-                /* this.tasksService.getAllTasks()
-                    .then((tasks) => {
-                        this.view.render(tasks,
-                            this.tasksService.getIncompleteTaskCount(), 
-                            this.tasksService.getCompletedTaskCount());
-                    }); */
                 this.view.render(this.tasksService.getAllTasks(),
                             this.tasksService.getIncompleteTaskCount(),
                             this.tasksService.getCompletedTaskCount());
@@ -80,12 +74,13 @@ Controller.prototype = {
         this.refresh();
         var controller = this;
         //Add a new task on enter key press.
-        $('#main').keypress(function(e) {
+        $('#main-box').keypress(function(e) {
             if(e.which == 13) {
-                if($(this).val() !== ""){
-                    controller.tasksService.addTask($(this).val()).then(() => {
+                if($('#main').val() !== "" && $('#duedate').val() !== ""){
+                    controller.tasksService.addTask($('#main').val(), $('#duedate').val()).then(() => {
                         controller.refresh();
-                        $(this).val(""); 
+                        $('#main').val("");
+                        $('#duedate').val("");
                     });
                 }
             }
@@ -142,7 +137,7 @@ Controller.prototype = {
         $(document).on('change', '.item', function(){
             var index = $('.item').index($(this));
             index = controller.getActualIndex(index);
-            controller.tasksService.setTask(index, $(this).find('input').val());
+            controller.tasksService.setTask(index, $(this).find('#description').val(), $(this).find('#date').val());
             controller.refresh();
         });
         //Show the cross for deleting a todo on hover

@@ -39,6 +39,7 @@ TasksService.prototype = _.extend(TasksService, {
                     tasks.unshift(value);
                 });
                 this.tasks = tasks;
+                this.save();
                 console.log(tasks);
             }).catch((err) => {
                 console.log(err);
@@ -88,8 +89,11 @@ TasksService.prototype = _.extend(TasksService, {
     },
 
     //Sets a new value for description of task at index.
-    setTask: function (index, line) {
+    setTask: function (index, line, date) {
         this.tasks[index].description = line;
+        this.tasks[index].dueDate = date;
+        this.database.ref('tasks/' + this.tasks[index].id)
+                .update({ description: line, dueDate: date });
         this.save();
     },
 
@@ -97,8 +101,8 @@ TasksService.prototype = _.extend(TasksService, {
     * Add a task.
     * @param line - Description of the task.
     */
-    addTask: function (line) {
-        var task = { description: line, completed: false };
+    addTask: function (line, dueDate) {
+        var task = { description: line, dueDate: dueDate, completed: false };
         this.database.ref('tasks').push(task);
         return this.update();
     },
@@ -114,6 +118,7 @@ TasksService.prototype = _.extend(TasksService, {
         return this.database.ref('tasks/'+task.id).remove()
             .then(() => {
                 this.tasks.splice(index, 1);
+                this.save();
                 return task;
             })
             .catch((err) => {   console.log(err); });
