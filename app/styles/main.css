@@ -8,14 +8,28 @@ body {
 
 #notepad {
   margin: 0 auto;
-  width: 800px;
+  margin-top: 5vw; 
+  width: 60vw;
   border-top: 10px solid #82706B;
   box-shadow: 1px 1px 5px #666;
 }
 
-#title {
+h1 {
   color: #C4C4C4;
   font-size: 60px;
+}
+
+#search {
+  margin-top: 3vw;
+  margin-left: 18vw;
+  margin-right: 10vw;
+  padding-left: 10px;
+  width: 15%;
+}
+
+#title {
+  display: flex;
+  flex-direction: row;
 }
 
 #main-box {
@@ -115,7 +129,7 @@ input:focus {
 }
 
 #links{
-  margin-left: 30%;
+  margin-left: 25vw;
   padding-left: 10px;
   width: 150px;
   margin-top: 3px;
@@ -124,7 +138,7 @@ input:focus {
 }
 
 #clear{
-  margin-left: 60%;
+  margin-left: 50vw;
   position: absolute;
   width: 100px;
   height: 18;

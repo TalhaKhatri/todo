@@ -1,19 +1,20 @@
 var _ = require('../../node_modules/underscore/underscore.js');
-
-Storage.prototype.setObj = function (key, obj) {
-    return this.setItem(key, JSON.stringify(obj));
-};
-Storage.prototype.getObj = function (key) {
-    return JSON.parse(this.getItem(key));
-};
-
+if (typeof (Storage) !== "undefined") {
+    Storage.prototype.setObj = (key, obj) => {
+        return this.setItem(key, JSON.stringify(obj));
+    };
+    Storage.prototype.getObj = (key) => {
+        return JSON.parse(this.getItem(key));
+    };
+}
 /**
  * Get the saved tasks from localStorage or else create a new task list.
  * @constructor
  * 
  */
-var TasksService = function (database) {
+var TasksService = (database) => {
     this.database = database;
+    this.tags = [];
     if (typeof (Storage) !== "undefined") {
         if (localStorage.tasks) {
             this.tasks = localStorage.getObj("tasks");
@@ -28,11 +29,11 @@ var TasksService = function (database) {
 TasksService.prototype = _.extend(TasksService, {
 
     //Updates the local database from server.
-    update: function () {
+    update: () => {
         return this.database.ref('tasks').once('value')
             .then((snapshot) => {
                 var tasks = [];
-                snapshot.forEach(function (child) {
+                snapshot.forEach((child) => {
                     var key = child.key;
                     var value = child.val();
                     value.id = key;
@@ -46,50 +47,56 @@ TasksService.prototype = _.extend(TasksService, {
             });
     },
 
-    //Get all tasks.
-    getAllTasks: function () {
-        return this.tasks;
+    //Get all tasks. //COMPLETE THIS
+    getAllTasks: () => {
+        if(this.tags.length === 0){
+            return this.tasks;
+        } else {
+            return this.tasks.filter((task) => {
+            return task.tags.contain;
+        });
+        }
     },
 
     /**
      * Get a specific task.
      * @param index - Index value of the task.
      */
-    getTask: function (index) {
+    getTask: (index) => {
         return this.tasks[index];
     },
 
     //Returns all completed tasks.
-    getAllCompleteTasks: function () {
-        return this.tasks.filter(function (task) {
+    getAllCompleteTasks: () => {
+        return this.tasks.filter((task) => {
             return task.completed === true;
         });
     },
 
     //Returns all incomplete tasks.
-    getAllIncompleteTasks: function () {
-        return this.tasks.filter(function (task) {
+    getAllIncompleteTasks: () => {
+        return this.tasks.filter((task) => {
             return task.completed === false;
         });
     },
 
     //Returns the total number of tasks.
-    getTaskCount: function () {
+    getTaskCount: () => {
         return this.task.length;
     },
 
     //Returns the number of completed tasks.
-    getCompletedTaskCount: function () {
+    getCompletedTaskCount: () => {
         return this.getAllCompleteTasks().length;
     },
 
     //Returns the number of incomplete tasks.
-    getIncompleteTaskCount: function () {
+    getIncompleteTaskCount: () => {
         return this.getAllIncompleteTasks().length;
     },
 
     //Sets a new value for description of task at index.
-    setTask: function (index, line, date) {
+    setTask: (index, line, date) => {
         this.tasks[index].description = line;
         this.tasks[index].dueDate = date;
         this.database.ref('tasks/' + this.tasks[index].id)
@@ -101,9 +108,9 @@ TasksService.prototype = _.extend(TasksService, {
     * Add a task.
     * @param line - Description of the task.
     */
-    addTask: function (line, dueDate, tagString) {
+    addTask: (line, dueDate, tagString) => {
         var tags = [];
-        tagString.split(',').forEach(function(tag) {
+        tagString.split(',').forEach((tag) => {
             tags.push(tag);
         }, this);
         var task = { description: line, dueDate: dueDate, tags: tags, completed: false };
@@ -116,7 +123,7 @@ TasksService.prototype = _.extend(TasksService, {
      * @param index - Index value of the task.
      * @returns The task to be removed.
      */
-    removeTask: function (index) {
+    removeTask: (index) => {
         console.log(index);
         var task = this.tasks[index];
         return this.database.ref('tasks/'+task.id).remove()
@@ -129,8 +136,8 @@ TasksService.prototype = _.extend(TasksService, {
     },
 
     //Removes all completed tasks.
-    removeAllCompletedTasks: function () {
-        this.getAllCompleteTasks().forEach(function(task) {
+    removeAllCompletedTasks: () => {
+        this.getAllCompleteTasks().forEach((task) => {
             this.database.ref('tasks/'+task.id).remove()
             .catch((err) => {   console.log(err); });
         }, this);
@@ -140,10 +147,10 @@ TasksService.prototype = _.extend(TasksService, {
     },
 
     //Removes all tasks.
-    removeAllTasks: function () {
-        this.tasks.forEach(function(task) {
+    removeAllTasks: () => {
+        this.tasks.forEach((task) => {
             this.database.ref('tasks/'+task.id).remove()
-            .catch((err) => {   console.log(err); });
+            .catch((err) => { console.log(err); });
         }, this);
         this.tasks = [];
         this.save();
@@ -153,7 +160,7 @@ TasksService.prototype = _.extend(TasksService, {
      * Toggles a task between complete and incomplete.
      * @param index - Index value of the task.
      */
-    toggleTask: function (index) {
+    toggleTask: (index) => {
         if(this.tasks[index].completed) {
             this.database.ref('tasks/' + this.tasks[index].id)
                 .update({ completed: false });
@@ -167,16 +174,16 @@ TasksService.prototype = _.extend(TasksService, {
     },
 
     //Toggles all tasks between complete and incomplete.
-    toggleAllTasks: function () {
+    toggleAllTasks: () => {
         var incompleteTasks = this.getAllIncompleteTasks();
         if (incompleteTasks.length > 0) {
-            this.tasks.forEach(function (task) {
+            this.tasks.forEach( (task) => {
                 this.database.ref('tasks/' + task.id)
                 .update({ completed: true });
                 task.completed = true;
             }, this);
         } else {
-            this.tasks.forEach(function (task) {
+            this.tasks.forEach((task) => {
                 this.database.ref('tasks/' + task.id)
                 .update({ completed: false });
                 task.completed = false;
@@ -185,8 +192,17 @@ TasksService.prototype = _.extend(TasksService, {
         this.save();
     },
 
+    //Filters through the tasks to find ones with the specified tags
+    filter: (tagsString) => {
+        var tags = [];
+        tagsString.split(',').forEach((tag) => {
+            tags.push(tag);
+        }, this);
+        this.tags = tags;
+    },
+
     //Saves the tasks to local storage.
-    save: function () {
+    save: () => {
         localStorage.setObj("tasks", this.tasks);
     }
 });

@@ -9,7 +9,7 @@ View.prototype = {
      * @param incompleteTaskCount - Number of incomplete tasks.
      * @param completeTaskCount - Number of completes tasks.
      */
-    render: function(tasks, incompleteTaskCount, completeTaskCount) {
+    render: (tasks, incompleteTaskCount, completeTaskCount) => {
         $('#list').empty();
         $('#item-count').empty();
         $('#clear').toggle(false);
